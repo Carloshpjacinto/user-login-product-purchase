@@ -12,6 +12,11 @@ export class ProductCreateService {
   }
 
   async execute(data: Product): Promise<Product> {
+    let codigo = '';
+    for (let i = 0; i < 12; i++) {
+      codigo += Math.floor(Math.random() * 10);
+    }
+    data.product_code = codigo;
     return await this.productRepository.create(data);
   }
 }
