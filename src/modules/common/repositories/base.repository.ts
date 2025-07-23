@@ -23,4 +23,12 @@ export class BaseRepository<T> implements IBaseRepository<T> {
   async findAll(): Promise<T[]> {
     return await this.model.findMany();
   }
+
+  async update(id: number, data: Partial<T>): Promise<T> {
+    return await this.model.update({ where: { id }, data });
+  }
+
+  async delete(id: number): Promise<void> {
+    return await this.model.delete({ where: { id } });
+  }
 }
