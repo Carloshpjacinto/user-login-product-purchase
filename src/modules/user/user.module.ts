@@ -15,6 +15,6 @@ import { RepositoryFactory } from '../common/factory/Repository.factory';
     UserDeleteService,
     RepositoryFactory,
   ],
-  exports: [UserCreateService],
+  exports: [],
 })
 export class UserModule {}

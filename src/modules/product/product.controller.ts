@@ -1,42 +1,30 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { ProductCreateService } from './service/productCreate.service';
+import { ProductDeleteService } from './service/productDelete.service';
+import { Product } from '@prisma/client';
+import { ParamId } from 'src/shared/decorators/paramId.decorator';
+import { ProductFindAllService } from './service/productFindAll.service';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
-
-  @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
-  }
+  constructor(
+    private readonly productCreateService: ProductCreateService,
+    private readonly productDeleteService: ProductDeleteService,
+    private readonly productFindAllService: ProductFindAllService,
+  ) {}
 
   @Get()
   findAll() {
-    return this.productService.findAll();
+    return this.productFindAllService.execute();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  @Post()
+  create(@Body() data: Product) {
+    return this.productCreateService.execute(data);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+  delete(@ParamId() id: number) {
+    return this.productDeleteService.execute(id);
   }
 }

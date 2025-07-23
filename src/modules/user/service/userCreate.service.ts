@@ -2,12 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from 'src/modules/common/repositories/interfaces/base.repository.interface';
 import { User } from '@prisma/client';
 import { RepositoryFactory } from 'src/modules/common/factory/Repository.factory';
-
-type dataUser = {
-  name: string;
-  email: string;
-  cpf: string;
-};
+import { dataUser } from '../types/dataUser';
 
 @Injectable()
 export class UserCreateService {
