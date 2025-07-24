@@ -16,12 +16,16 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     return this.prisma[this.modelName] as any;
   }
 
+  async create(data: T): Promise<T> {
+    return await this.model.create({ data });
+  }
+
   async findAll(): Promise<T[]> {
     return await this.model.findMany();
   }
 
-  async create(data: T): Promise<T> {
-    return await this.model.create({ data });
+  async findByEmail(email: string): Promise<T> {
+    return await this.model.findUnique({ where: { email } });
   }
 
   async update(id: number, data: Partial<T>): Promise<T> {

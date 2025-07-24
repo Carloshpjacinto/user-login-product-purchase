@@ -7,6 +7,8 @@ export const ParamId = createParamDecorator(
     const request = context.switchToHttp().getRequest();
     const id = request.params.id;
 
+    console.log(request);
+
     return Number(id);
   },
 );
